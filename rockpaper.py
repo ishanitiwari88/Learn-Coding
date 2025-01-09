@@ -1,55 +1,62 @@
 import random
 
-print("\nWELCOME TO THE ROCK, PAPER, SCISSORS GAME! \nYour choices are- rock, paper, scissors. \nType quit when you want to leave the game")
-choices=['rock', 'paper', 'scissors']
+def get_user_choice():
+    while True:
+        choice = input("You: ").lower().strip()
+        if choice in ['rock', 'paper', 'scissors', 'quit']:
+            return choice 
+        else:
+            print("invalid input")
+            
+def get_winner(user_choice, computer_choice):
+    if user_choice==computer_choice:
+        return "tie"
+    
+    winning_moves = {
+        'rock':'scissors',
+        'paper':'rock',
+        'scissors':'paper'
+    }
+    
+    if winning_moves[user_choice]==computer_choice:
+        return "user"
+    return "computer"
+    
+def get_scores(user_score, computer_score):
+    print(f"Scores- You: {user_score} | Robo: {computer_score}")
+    
+def main():
 
-points_user = []
-points_computer = []
+    print("\nWELCOME TO THE ROCK, PAPER, SCISSORS GAME! \nYour choices are- rock, paper, scissors. \nType quit when you want to leave the game")
 
-while True:
-    user = input("You: ")
-    if user == 'quit':  # Check for quit condition first
-        break
+    user_score = 0
+    computer_score = 0
+
+    while True:
+        user_choice = get_user_choice()
+        if user_choice == 'quit':  # Check for quit condition first
+            break
         
-    computer = random.choice(choices)  # Removed 'quit' from computer's choices
-    print("Robo X: ", computer)
-    
-    
-    if user =='rock':
-        if computer=='rock':
-            print("it's a tie")
-            print("you: ", points_user, "robo X: ", points_computer)
-        elif computer=='paper':
-            print(f"{computer} beats {user}.")
-            points_computer.append(1)
-            print("you: ", points_user, "robo X: ", points_computer)
-        elif computer=='scissors':
-            print(f"{user} beats {computer}")
-            points_user.append(1)
-            print("you: ", points_user, "robo X: ", points_computer)
-    elif user =='paper':
-        if computer=='paper':
-            print("it's a tie")
-            print("you: ", points_user, "robo X: ", points_computer)
-        elif computer=='scissors':
-            print(f"{computer} beats {user}.")
-            points_computer.append(1)
-            print("you: ", points_user, "robo X: ", points_computer)
-        elif computer=='rock':
-            print(f"{user} beats {computer}")
-            points_user.append(1)
-            print("you: ", points_user, "robo X: ", points_computer)
-    elif user =='scissors':
-        if computer=='scissors':
-            print("it's a tie")
-            print("you: ", points_user, "robo X: ", points_computer)
-        elif computer=='rock':
-            print(f"{computer} beats {user}.")
-            points_computer.append(1)
-            print("you: ", points_user, "robo X: ", points_computer)
-        elif computer=='paper':
-            print(f"{user} beats {computer}")
-            points_user.append(1)
-            print("you: ", points_user, "robo X: ", points_computer)
+        computer_choice = random.choice(['rock', 'paper', 'scissors'])  
+        print("Robo X: ", computer_choice)
+        
+        result = get_winner(user_choice, computer_choice)
+        
+        if result=='tie':
+            print("It's a tie!")
+        elif result=="user":
+            print(f"{user_choice} beats {computer_choice}")
+            user_score += 1
+        elif result=="computer":
+            print(f"{computer_choice} beats {user_choice}")
+            computer_score += 1
+        get_scores(user_score, computer_score)
+        print()
+   
+    print("\nFinal Score:")
+    get_scores(user_score, computer_score)
+  
+if __name__ == "__main__":
+    main()
 
     
